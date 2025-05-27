@@ -29,10 +29,10 @@ def coin_row_optimise_states_space(coins: Sequence[int]) -> int:
     eliminate the space of unneeded old history,
     since the result only depends on the last 2 states
     """
-    if len(coins) <= 2:
-        return max(coins, default=0)
+    if not coins:
+        return 0
 
-    previous, current = coins[0:2]
-    for i in range(2, len(coins)):
+    previous, current = 0, coins[0]
+    for i in range(1, len(coins)):
         previous, current = current, max(previous + coins[i], current)
     return current
