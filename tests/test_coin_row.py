@@ -2,9 +2,8 @@ from collections.abc import Callable, Sequence
 
 import pytest
 
-from dynamic_programming_study.coin_row import (
-    coin_row_conventional, coin_row_optimise_states_space,
-)
+from dynamic_programming_study.coin_row import (coin_row_conventional,
+                                                coin_row_optimise_states_space)
 
 
 @pytest.mark.parametrize("impl", [
