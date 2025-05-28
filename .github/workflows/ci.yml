@@ -43,6 +43,12 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
 
+      - name: Python linting
+        run: |
+          poetry run flake8 src tests
+          poetry run mypy src
+          poetry run isort src tests --check --diff
+
       # https://remarkablemark.org/blog/2017/10/12/check-git-dirty/
       - name: Check git dirty
         run: |
