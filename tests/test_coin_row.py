@@ -27,3 +27,6 @@ def test_coin_row(impl: Callable[[Sequence[int]], int]):
     assert impl([1, 1, 3, 1]) == 4
 
     assert impl([40, 1, 3, 60]) == 100
+
+    # test case/example in the book
+    assert impl([5, 1, 2, 10, 6, 2]) == 17
