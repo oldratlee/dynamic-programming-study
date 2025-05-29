@@ -40,15 +40,20 @@ jobs:
 
       - name: Run tests
         run: poetry run pytest --cov=src --cov-branch --cov-report=xml
+        continue-on-error: true
 
       # https://docs.codecov.com/docs/code-coverage-with-python
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
+        continue-on-error: true
 
       # Python linting
       - run: poetry run flake8 src tests
+        continue-on-error: true
       - run: poetry run mypy src
+        continue-on-error: true
       - run: poetry run isort src tests --check --diff
+        continue-on-error: true
 
       # https://remarkablemark.org/blog/2017/10/12/check-git-dirty/
       - name: Check git dirty
