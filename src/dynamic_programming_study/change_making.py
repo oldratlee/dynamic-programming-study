@@ -13,11 +13,12 @@ from collections.abc import Sequence
 
 def make_change(denominations: Sequence[int], n: int) -> int:
     """
-    Returns the minimum number of coins of change making
+    Returns the minimum number of coins needed
+    to make change for a given amount.
 
-    :param denominations the denominations of coins
-    :param n the mount of change
-    :return the minimum number of coins
+    :param denominations: The available coin denominations
+    :param n: The target amount of change to make
+    :return: The minimum number of coins needed
     """
     dp = [0] * (n + 1)
     for i in range(1, n + 1):
@@ -28,12 +29,13 @@ def make_change(denominations: Sequence[int], n: int) -> int:
 def make_change_support_d1_absent(
         denominations: Sequence[int], n: int) -> int | None:
     """
-    Returns the minimum number of coins of change making,
-    without requiring denomination 1 existence
+    Returns the minimum number of coins needed to make change,
+    without requiring denomination 1 to be present in the denominations.
 
-    :param denominations the denominations of coins
-    :param n the mount of change
-    :return the minimum number of coins, or None if change making is impossible
+    :param denominations: The available coin denominations
+    :param n: The target amount of change to make
+    :return: The minimum number of coins needed,
+             or None if the amount cannot be made with the given denominations
     """
     dp: list[int | None] = [0] * (n + 1)
     for i in range(1, n + 1):
