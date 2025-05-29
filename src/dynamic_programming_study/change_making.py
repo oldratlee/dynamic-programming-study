@@ -34,13 +34,12 @@ def change_making_support_d1_absent(
 
     :param denominations: The available coin denominations
     :param n: The target amount of change to make
-    :return: The minimum number of coins needed,
-             or None if the amount cannot be made with the given denominations
+    :return: The minimum number of coins needed, or None if the amount cannot be made with the given denominations
     """
     dp: list[int | None] = [0] * (n + 1)
     for i in range(1, n + 1):
         candidates = (
-            mount + 1  # type: ignore[operator]
+            mount + 1
             for d in denominations
             if d <= i and (mount := dp[i - d]) is not None)
         dp[i] = min(candidates, default=None)
