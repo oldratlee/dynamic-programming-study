@@ -40,8 +40,8 @@ def make_change_support_d1_absent(
     dp: list[int | None] = [0] * (n + 1)
     for i in range(1, n + 1):
         candidates = (
-            dp[i - d] + 1  # type: ignore[operator]
+            mount + 1  # type: ignore[operator]
             for d in denominations
-            if d <= i and dp[i - d] is not None)
+            if d <= i and (mount := dp[i - d]) is not None)
         dp[i] = min(candidates, default=None)
     return dp[-1]
