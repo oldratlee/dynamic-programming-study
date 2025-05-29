@@ -12,7 +12,7 @@ from collections.abc import Sequence
 
 def coin_row_conventional(coins: Sequence[int]) -> int:
     """
-    conventional implementation by the book
+    Solves the coin row problem using a conventional approach by the book.
     """
     if not coins:
         return 0
@@ -26,8 +26,8 @@ def coin_row_conventional(coins: Sequence[int]) -> int:
 
 def coin_row_optimise_states_space(coins: Sequence[int]) -> int:
     """
-    eliminate the space of unneeded old history,
-    since the result only depends on the last 2 states
+    Optimizes space complexity by only storing the previous two states,
+    since computing the next state only requires the last two results.
     """
     if not coins:
         return 0
