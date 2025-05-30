@@ -47,8 +47,8 @@ jobs:
 
       # Python linting
       - run: poetry run flake8 src tests --color=always
+      - run: poetry run isort src tests --check --diff --color
       - run: poetry run mypy src --color-output
-      - run: poetry run isort src tests --check --diff
 
       # https://remarkablemark.org/blog/2017/10/12/check-git-dirty/
       - name: Check git dirty
