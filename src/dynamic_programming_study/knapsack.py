@@ -1,0 +1,23 @@
+"""
+Knapsack Problem: Given n items of known weights w1, w2, ... , wn
+and values v1, v2, ... , vn and a knapsack of capacity W,
+find the most valuable subset of the items that fit into the knapsack.
+
+more information see "Introduction to the Design and Analysis
+of Algorithms (3rd Ed.)" - Chapter 3.4 / 8.2
+"""
+from itertools import product
+
+
+def knapsack(item_weights: list[int], item_values: list[int],
+             capacity: int) -> int:
+    if not item_weights:
+        return 0
+
+    dp = [[0] * (len(item_weights)) for _ in range(capacity + 1)]
+    for c, i in product(range(1, capacity + 1), range(len(item_weights))):
+        if (c_minus := c - item_weights[i]) >= 0:
+            dp[c][i] = max(dp[c][i - 1], dp[c_minus][i - 1] + item_values[i])
+        else:
+            dp[c][i] = dp[c][i - 1]
+    return dp[-1][-1]
