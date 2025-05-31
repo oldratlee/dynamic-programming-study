@@ -7,6 +7,7 @@ more information see "Introduction to the Design and Analysis
 of Algorithms (3rd Ed.)" - Chapter 3.4 / 8.2
 """
 from collections.abc import Sequence
+from functools import cache
 from itertools import product
 
 
@@ -24,3 +25,21 @@ def knapsack(item_weights: Sequence[int], item_values: Sequence[int],
         else:
             dp[c][i] = dp[c][i - 1]
     return dp[-1][-1]
+
+
+def knapsack_memo(item_weights: list[int], item_values: list[int],
+                  capacity: int) -> int:
+    @cache
+    def go(c, i):
+        """
+        :param c: remaining capacity
+        :param i: the item number to be used
+        """
+        if c == 0 or i == 0:
+            return 0
+        elif (c_minus := c - item_weights[i - 1]) >= 0:
+            return max(go(c, i - 1), go(c_minus, i - 1) + item_values[i - 1])
+        else:
+            return go(c, i - 1)
+
+    return go(capacity, len(item_weights))
