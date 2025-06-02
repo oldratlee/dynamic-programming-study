@@ -27,10 +27,10 @@ def knapsack(item_weights: Sequence[int], item_values: Sequence[int],
     return dp[-1][-1]
 
 
-def knapsack_memo(item_weights: list[int], item_values: list[int],
+def knapsack_memo(item_weights: Sequence[int], item_values: Sequence[int],
                   capacity: int) -> int:
     @cache
-    def go(c, i):
+    def go(c: int, i: int):
         """
         :param c: remaining capacity
         :param i: the item number to be used
