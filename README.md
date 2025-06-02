@@ -8,3 +8,11 @@
 <a href="https://gitpod.io/#https://github.com/oldratlee/dynamic-programming-study"><img src="https://img.shields.io/badge/Gitpod-ready to code-339933?label=gitpod&logo=gitpod&logoColor=white" alt="gitpod: Ready to Code"></a>
 </p>
 
+## Problems from Chapter 8 Dynamic Programming of "Introduction to the Design and Analysis of Algorithms" (3rd Edition)
+
+Problem solutions:
+
+- [`ch8_1_example1_coin_row.py`](src/dp_study/idaa3e/ch8_1_example1_coin_row.py)
+- [`ch8_1_example2_change_making.py`](src/dp_study/idaa3e/ch8_1_example2_change_making.py)
+- [`ch8_1_example3_coin_collecting.py`](src/dp_study/idaa3e/ch8_1_example3_coin_collecting.py)
+- [`ch8_2_knapsack.py`](src/dp_study/idaa3e/ch8_2_knapsack.py)

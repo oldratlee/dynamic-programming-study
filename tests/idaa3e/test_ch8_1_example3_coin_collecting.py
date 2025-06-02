@@ -1,4 +1,4 @@
-from dynamic_programming_study.coin_collecting import collect_coin
+from dp_study.idaa3e.ch8_1_example3_coin_collecting import collect_coin
 
 
 def test_collect_coin():

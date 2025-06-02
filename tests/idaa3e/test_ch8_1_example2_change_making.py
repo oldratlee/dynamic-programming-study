@@ -2,13 +2,12 @@ from collections.abc import Callable, Sequence
 
 import pytest
 
-from dynamic_programming_study.change_making import (
+from dp_study.idaa3e.ch8_1_example2_change_making import (
     make_change, make_change_support_d1_absent)
 
 
 @pytest.mark.parametrize("impl", [
-    make_change, make_change_support_d1_absent,
-])
+    make_change, make_change_support_d1_absent])
 @pytest.mark.parametrize("args, expected", [
     [([1], 0), 0],
     [([1], 1), 1],

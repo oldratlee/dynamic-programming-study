@@ -2,13 +2,12 @@ from collections.abc import Callable, Sequence
 
 import pytest
 
-from dynamic_programming_study.coin_row import (coin_row_conventional,
-                                                coin_row_optimise_states_space)
+from dp_study.idaa3e.ch8_1_example1_coin_row import (
+    coin_row_conventional, coin_row_optimise_states_space)
 
 
 @pytest.mark.parametrize("impl", [
-    coin_row_conventional, coin_row_optimise_states_space,
-])
+    coin_row_conventional, coin_row_optimise_states_space])
 def test_coin_row(impl: Callable[[Sequence[int]], int]):
     assert impl(tuple()) == 0
     assert impl([]) == 0
