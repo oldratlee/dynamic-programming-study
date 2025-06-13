@@ -13,7 +13,7 @@ dependencies = []
 packages = [{ include = "dp_study", from = "src" }]
 
 [tool.poetry.group.test.dependencies]
-pytest = "^8.3.5"
+pytest = "^8.4.0"
 pytest-cov = "^6.1.1"
 pytest-check = "^2.5.3"
 pytest-sugar = "^1.0.0"
