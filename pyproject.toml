@@ -19,7 +19,7 @@ pytest-check = "^2.5.3"
 pytest-sugar = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
-flake8 = "^7.2.0"
+flake8 = "^7.3.0"
 isort = { extras = ["colors"], version = "^6.0.1" }
 mypy = "^1.16.1"
 
