@@ -17,6 +17,8 @@ def coin_row_conventional(coins: Sequence[int]) -> int:
     if not coins:
         return 0
 
+    # dp state represents
+    # the maximum amount of money achievable using the first `i` coins
     dp = [0] * (len(coins) + 1)
     dp[1] = coins[0]
     for i in range(2, len(coins) + 1):
