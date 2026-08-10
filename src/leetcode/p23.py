@@ -40,6 +40,52 @@ import heapq
 from dataclasses import dataclass
 
 
+def merge_k_sorted_linked_lists(lists: list[ListNode | None]) \
+        -> ListNode | None:
+    heap_list = [_ListNodeElementInHeap(lst.val, idx, lst)
+                 for idx, lst in enumerate(lists) if lst]
+    heapq.heapify(heap_list)
+
+    merged: ListNode | None = None
+    while heap_list:
+        ele = heapq.heappop(heap_list)
+        merged = ListNode(ele.head, merged)
+
+        if n := ele.lst.next:
+            ele.head, ele.lst = n.val, n
+            heapq.heappush(heap_list, ele)
+
+    return reverse_linked_list(merged)
+
+
+@dataclass
+class ListNode:
+    """
+    singly-linked list
+    """
+    val: int
+    next: ListNode | None = None
+
+
+def reverse_linked_list(lst: ListNode | None) -> ListNode | None:
+    reversed_list: ListNode | None = None
+    while lst:
+        reversed_list = ListNode(lst.val, reversed_list)
+        lst = lst.next
+    return reversed_list
+
+
+@dataclass(order=True)
+class _ListNodeElementInHeap:
+    # Unique heap ordering key:
+    #  - current head value
+    #  - List index in input; tie-breaker so equal heads stay stably ordered
+    head: int
+    list_index_in_input: int
+    # Payload (not part of the ordering key)
+    lst: ListNode
+
+
 def merge_k_sorted_lists(lists: list[list[int]]) -> list[int]:
     heap_list = [_ElementInHeap(lst[0], idx, lst, 0)
                  for idx, lst in enumerate(lists) if lst]
