@@ -36,6 +36,8 @@ Constraints:
 * lists[i] is sorted in ascending order.
 * The sum of lists[i].length will not exceed 104.
 """
+from __future__ import annotations
+
 import heapq
 from dataclasses import dataclass
 
