@@ -2,7 +2,7 @@ from collections.abc import Callable
 
 import pytest
 
-from leetcode.p23 import (ListNode, merge_k_sorted_linked_lists,
+from leetcode.p23 import (LinkedList, ListNode, merge_k_sorted_linked_lists,
                           merge_k_sorted_lists, merge_k_sorted_lists_2)
 
 
@@ -22,14 +22,14 @@ def test_merge_k_sorted_linked_lists():
     ])) == c([1, 1, 2, 3, 4, 4, 5, 6])
 
 
-def c(lst: list[int]) -> ListNode | None:
-    ret: ListNode | None = None
+def c[T](lst: list[T]) -> LinkedList[T]:
+    ret: LinkedList[T] = None
     for x in reversed(lst):
         ret = ListNode(x, ret)
     return ret
 
 
-def cc(lists: list[list[int]]) -> list[ListNode | None]:
+def cc[T](lists: list[list[T]]) -> list[LinkedList[T]]:
     return [c(lst) for lst in lists]
 
 

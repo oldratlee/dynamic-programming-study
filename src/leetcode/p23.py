@@ -42,8 +42,8 @@ import heapq
 from dataclasses import dataclass
 
 
-def merge_k_sorted_linked_lists(lists: list[ListNode | None]) \
-        -> ListNode | None:
+def merge_k_sorted_linked_lists(lists: list[LinkedList[int]]) \
+        -> LinkedList[int]:
     heap_list = [_ListNodeElementInHeap(lst.val, idx, lst)
                  for idx, lst in enumerate(lists) if lst]
     heapq.heapify(heap_list)
@@ -65,16 +65,19 @@ def merge_k_sorted_linked_lists(lists: list[ListNode | None]) \
 
 
 @dataclass
-class ListNode:
+class ListNode[T]:
     """
-    singly-linked list
+    singly-linked list node
     """
-    val: int
-    next: ListNode | None = None
+    val: T
+    next: LinkedList[T] = None
 
 
-def reverse_linked_list(lst: ListNode | None) -> ListNode | None:
-    reversed_list: ListNode | None = None
+type LinkedList[T] = ListNode[T] | None
+
+
+def reverse_linked_list[T](lst: LinkedList[T]) -> LinkedList[T]:
+    reversed_list: LinkedList[T] = None
     while lst:
         reversed_list = ListNode(lst.val, reversed_list)
         lst = lst.next
@@ -82,14 +85,14 @@ def reverse_linked_list(lst: ListNode | None) -> ListNode | None:
 
 
 @dataclass(order=True)
-class _ListNodeElementInHeap:
+class _ListNodeElementInHeap[T]:
     # Unique heap ordering key:
     #  - current head value
     #  - List index in input; tie-breaker so equal heads stay stably ordered
-    head: int
+    head: T
     list_index_in_input: int
     # Payload (not part of the ordering key)
-    lst: ListNode
+    lst: ListNode[T]
 
 
 def merge_k_sorted_lists(lists: list[list[int]]) -> list[int]:
