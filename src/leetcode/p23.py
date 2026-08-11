@@ -48,16 +48,20 @@ def merge_k_sorted_linked_lists(lists: list[ListNode | None]) \
                  for idx, lst in enumerate(lists) if lst]
     heapq.heapify(heap_list)
 
-    merged: ListNode | None = None
+    dummy_head = tail = ListNode(0)
     while heap_list:
         ele = heapq.heappop(heap_list)
-        merged = ListNode(ele.head, merged)
+        # Chained assignment `a = b = expr` evaluates `expr` once,
+        #   then assigns to targets left-to-right.
+        # Here `tail.next` MUST be set BEFORE `tail` is rebound,
+        #   do NOT swap assignment targets to `tail = tail.next = ...`
+        tail.next = tail = ListNode(ele.head)
 
-        if n := ele.lst.next:
-            ele.head, ele.lst = n.val, n
+        if nxt := ele.lst.next:
+            ele.head, ele.lst = nxt.val, nxt
             heapq.heappush(heap_list, ele)
 
-    return reverse_linked_list(merged)
+    return dummy_head.next
 
 
 @dataclass
