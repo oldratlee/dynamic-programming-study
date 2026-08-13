@@ -34,8 +34,20 @@ from collections.abc import Sequence
 
 
 def max_sub_array_sum(nums: Sequence[int]) -> int:
+    # Kadane's algorithm — single-pass O(n) dynamic programming approach.
+    #
+    # cur_sum: running sum of *the best subarray ending at the current index*.
+    #          At each step we decide whether to extend the previous subarray
+    #          (cur_sum + num) or start fresh from the current element (num).
+    #          Taking the max of the two is the DP recurrence.
+    #
+    # max_sum: global best subarray sum seen so far across all indices.
+    #          Updated after every step so it always reflects the answer.
     cur_sum = max_sum = 0
     for num in nums:
+        # Either grow the existing subarray by `num`, or restart a new
+        # subarray at `num`. Restarting wins when the prior running sum
+        # is negative (it would only drag the total down).
         cur_sum = max(cur_sum + num, num)
         max_sum = max(cur_sum, max_sum)
     return max_sum

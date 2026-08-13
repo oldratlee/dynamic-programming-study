@@ -44,21 +44,52 @@ from dataclasses import dataclass
 
 def merge_k_sorted_linked_lists(lists: list[LinkedList[int]]) \
         -> LinkedList[int]:
+    """
+    Merge k sorted singly-linked lists into one sorted list using a min-heap.
+
+    Algorithm (k-way merge via heap):
+      1. Seed the heap with the head node of every non-empty input list.
+      2. Repeatedly pop the smallest head from the heap and append it to
+         the result chain.
+      3. After popping a node, advance its source list by one and push the
+         next node back into the heap (if one exists).
+      4. When the heap is drained, every node from every input list has been
+         placed in ascending order.
+
+    Time : O(N log k)  — N total nodes, k lists; each push/pop is O(log k).
+    Space: O(k)       — the heap never holds more than one node per list.
+    """
     heap_list = [_ListNodeElementInHeap(lst.val, idx, lst)
                  for idx, lst in enumerate(lists) if lst]
+    # Turn the list into a min-heap in O(k)
     heapq.heapify(heap_list)
 
+    # `dummy_head` is a sentinel whose `next` points to the real first node;
+    #     it simplifies head-insertion logic (no special "first node" case).
+    # `tail` always refers to the last node already linked into the result.
     dummy_head = tail = ListNode(0)
+
     while heap_list:
+        # Pop the globally smallest current head
+        #   among all active lists in O(log k)
         ele = heapq.heappop(heap_list)
-        # Chained assignment `a = b = expr` evaluates `expr` once,
+        # Append to the result Linked List
+        #
+        # Chained assignment `a = b = expr` evaluates `expr` ONCE,
         #   then assigns to targets left-to-right.
         # Here `tail.next` MUST be set BEFORE `tail` is rebound,
-        #   do NOT swap assignment targets to `tail = tail.next = ...`
+        #   otherwise the old tail's `next` would never be linked.
+        # do NOT swap assignment targets to `tail = tail.next = ...`
         tail.next = tail = ListNode(ele.head)
 
+        # If the list this element came from still has more nodes,
+        # forward one element and put it back in the heap.
+        #
+        # `nxt` is the next node in that source list (or None).
         if nxt := ele.lst.next:
+            # Update sort key & payload node
             ele.head, ele.lst = nxt.val, nxt
+            # Re-insert; heap re-sorts in O(log k)
             heapq.heappush(heap_list, ele)
 
     return dummy_head.next
