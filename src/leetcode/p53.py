@@ -33,7 +33,7 @@ Constraints:
 from collections.abc import Sequence
 
 
-def max_sub_array_sum(nums: Sequence[int]) -> int:
+def max_subarray_sum(nums: Sequence[int]) -> int:
     # Kadane's algorithm — single-pass O(n) dynamic programming approach.
     #
     # cur_sum: running sum of *the best subarray ending at the current index*.
@@ -48,6 +48,17 @@ def max_sub_array_sum(nums: Sequence[int]) -> int:
         # Either grow the existing subarray by `num`, or restart a new
         # subarray at `num`. Restarting wins when the prior running sum
         # is negative (it would only drag the total down).
+        cur_sum = max(cur_sum + num, num)
+        max_sum = max(cur_sum, max_sum)
+    return max_sum
+
+
+def max_nonempty_subarray_sum(nums: Sequence[int]) -> int | None:
+    if not nums:
+        return None
+
+    cur_sum = max_sum = nums[0]
+    for num in nums[1:]:
         cur_sum = max(cur_sum + num, num)
         max_sum = max(cur_sum, max_sum)
     return max_sum
