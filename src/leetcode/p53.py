@@ -31,6 +31,7 @@ Constraints:
 """
 
 from collections.abc import Sequence
+from itertools import islice
 
 
 def max_subarray_sum(nums: Sequence[int]) -> int:
@@ -58,7 +59,11 @@ def max_nonempty_subarray_sum(nums: Sequence[int]) -> int | None:
         return None
 
     cur_sum = max_sum = nums[0]
-    for num in nums[1:]:
+    # Use `islice(nums, 1, None)` instead of `nums[1:]`
+    #   to skip the first element without allocating a new list.
+    # For large inputs this avoids an O(n) copy,
+    #   keeping the loop O(n) time and O(1) extra space.
+    for num in islice(nums, 1, None):
         cur_sum = max(cur_sum + num, num)
         max_sum = max(cur_sum, max_sum)
     return max_sum
