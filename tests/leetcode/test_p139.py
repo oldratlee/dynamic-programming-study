@@ -1,11 +1,17 @@
-from leetcode.p139 import word_break
+from collections.abc import Callable, Sequence
+
+import pytest
+
+from leetcode.p139 import word_break, word_break_opt_substring_comparison
 
 
-def test_word_break():
-    assert word_break("", [])
-    assert word_break("", ["leet", "code"])
-    assert not word_break("foo", [])
+@pytest.mark.parametrize("impl", [
+    word_break, word_break_opt_substring_comparison])
+def test_word_break(impl: Callable[[str, Sequence[str]], bool]):
+    assert impl("", [])
+    assert impl("", ["leet", "code"])
+    assert not impl("foo", [])
 
-    assert word_break("leetcode", ["leet", "code"])
-    assert word_break("applepenapple", ["apple", "pen"])
-    assert not word_break("catsandog", ["cats", "dog", "sand", "and", "cat"])
+    assert impl("leetcode", ["leet", "code"])
+    assert impl("applepenapple", ["apple", "pen"])
+    assert not impl("catsandog", ["cats", "dog", "sand", "and", "cat"])
