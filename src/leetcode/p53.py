@@ -35,8 +35,17 @@ from itertools import islice
 
 
 def max_subarray_sum(nums: Sequence[int]) -> int:
-    # Kadane's algorithm — single-pass O(n) dynamic programming approach.
-    #
+    """
+    Largest sum of any contiguous subarray, with the *empty* subarray allowed.
+    Uses Kadane's algorithm — a single-pass O(n) dynamic programming approach.
+
+    Unlike the non-empty variant, `cur_sum = max_sum = 0` lets the running sum
+    restart from the empty subarray, so an all-negative input returns 0
+    (the empty subarray's sum) instead of the least-negative single element.
+
+    Time : O(n)  — one pass over the array.
+    Space: O(1)  — only two scalar accumulators.
+    """
     # cur_sum: running sum of *the best subarray ending at the current index*.
     #          At each step we decide whether to extend the previous subarray
     #          (cur_sum + num) or start fresh from the current element (num).
@@ -50,11 +59,46 @@ def max_subarray_sum(nums: Sequence[int]) -> int:
         # subarray at `num`. Restarting wins when the prior running sum
         # is negative (it would only drag the total down).
         cur_sum = max(cur_sum + num, num)
-        max_sum = max(cur_sum, max_sum)
+        max_sum = max(max_sum, cur_sum)
+    return max_sum
+
+
+def max_subarray_sum_brute_force(nums: Sequence[int]) -> int:
+    """
+    Largest subarray sum by enumerating every subarray (brute force),
+    with the *empty* subarray allowed.
+
+    `max_sum = 0` seeds the answer with the empty subarray's sum, so an
+    all-negative input returns 0 instead of the least-negative single element.
+
+    Time : O(n^3) — O(n^2) subarrays, each summed over its length.
+    Space: O(1)   — `islice` is lazy; no subarray slice is allocated.
+    """
+    max_sum = 0
+    # Enumerate every non-empty subarray `nums[start:stop]`.
+    #   start: inclusive left index of the subarray. It visits every possible
+    #      starting position in the array (0 .. len(nums) - 1).
+    #   stop:  exclusive right index (one past the last element), running from
+    #      `start + 1` (single element) up to `len(nums)` (rest of the array).
+    for start in range(len(nums)):
+        for stop in range(start + 1, len(nums) + 1):
+            # Use `islice(nums, start, stop)` instead of `nums[start:stop]`
+            #   to sum the subarray without allocating an intermediate list.
+            # Slicing would copy O(length) elements per subarray;
+            #   the lazy iterator keeps the extra space O(1).
+            max_sum = max(max_sum, sum(islice(nums, start, stop)))
     return max_sum
 
 
 def max_nonempty_subarray_sum(nums: Sequence[int]) -> int | None:
+    """
+    Largest sum of any non-empty subarray via Kadane's algorithm.
+
+    Returns `None` for an empty input.
+
+    Time : O(n)  — one pass over the array.
+    Space: O(1)  — only two scalar accumulators.
+    """
     if not nums:
         return None
 
@@ -65,5 +109,27 @@ def max_nonempty_subarray_sum(nums: Sequence[int]) -> int | None:
     #   keeping the loop O(n) time and O(1) extra space.
     for num in islice(nums, 1, None):
         cur_sum = max(cur_sum + num, num)
-        max_sum = max(cur_sum, max_sum)
+        max_sum = max(max_sum, cur_sum)
+    return max_sum
+
+
+def max_nonempty_subarray_sum_brute_force(nums: Sequence[int]) -> int | None:
+    """
+    Largest sum of any non-empty subarray by enumerating every subarray.
+
+    Returns `None` for an empty input.
+
+    Time : O(n^3) — O(n^2) subarrays,
+                    each summed over its length (slicing + sum).
+    Space: O(n)   — the temporary slice `nums[start:stop]`
+                    holds up to n elements.
+    """
+    if not nums:
+        return None
+
+    max_sum = nums[0]
+    # Enumerate every non-empty subarray `nums[start:stop]`.
+    for start in range(len(nums)):
+        for stop in range(start + 1, len(nums) + 1):
+            max_sum = max(max_sum, sum(nums[start:stop]))
     return max_sum
