@@ -65,7 +65,7 @@ def word_break(s: str, word_dict: Sequence[str]) -> bool:
             # Time O(L): compare; Space O(L): `s[remain:i]` temp slice
             if remain >= 0 and dp[remain] and s[remain:i] == w:
                 dp[i] = True
-                continue
+                break
 
     return dp[-1]
 
@@ -107,6 +107,6 @@ def word_break_opt_substring_comparison(
             # Time O(L): compare; Space O(1): no temp slice allocated
             if remain >= 0 and dp[remain] and s.startswith(w, remain, i):
                 dp[i] = True
-                continue
+                break
 
     return dp[-1]
