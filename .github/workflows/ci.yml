@@ -46,7 +46,7 @@ jobs:
       - run: poetry env info --ansi
 
       - name: Run tests
-        run: poetry run pytest --cov=src --cov-branch --cov-report=xml --color=yes
+        run: poetry run pytest --cov=src --cov-branch --cov-report=xml --color=yes -m ""
 
       # https://docs.codecov.com/docs/code-coverage-with-python
       - name: Upload coverage to Codecov

@@ -19,6 +19,11 @@ logAndRun() {
 cd "$SELF_DIR"/..
 
 logAndRun poetry run pytest --cov=src --cov-branch --cov-report=xml --color=auto
+# run performance test only:
+#   poetry run pytest -m benchmark
+# run test cases:
+#   poetry run pytest -m ""
+
 logAndRun poetry run flake8 src tests --color=auto
 logAndRun poetry run isort src tests --check --diff --color
 logAndRun poetry run mypy src --color-output
