@@ -34,9 +34,10 @@ Constraints:
 """
 
 from collections.abc import Sequence
+from functools import cache
 
 
-def word_break(s: str, word_dict: Sequence[str]) -> bool:
+def word_break_dp(s: str, word_dict: Sequence[str]) -> bool:
     """
     Determine whether `s` can be segmented into dictionary words.
 
@@ -72,12 +73,12 @@ def word_break(s: str, word_dict: Sequence[str]) -> bool:
     return dp[-1]
 
 
-def word_break_opt_substring_comparison(
+def word_break_dp_startswith(
         s: str, word_dict: Sequence[str]) -> bool:
     """
-    Solve :func:`~p139.word_break` with an optimized substring comparison.
+    Solve :func:`~p139.word_break_dp` with an optimized substring comparison.
 
-    Identical in logic to :func:`~p139.word_break`,
+    Identical in logic to :func:`~p139.word_break_dp`,
     except that the substring equality test `s[remain:i] == w`
     is replaced by `s.startswith(w, remain, i)`:
 
@@ -118,7 +119,7 @@ def word_break_opt_substring_comparison(
 
 def word_break_dfs(s: str, word_dict: Sequence[str]) -> bool:
     """
-    Solve :func:`~p139.word_break` by depth-first search (no memoization).
+    Solve :func:`~p139.word_break_dp` by depth-first search (no memoization).
 
     `go(remaining)` is True iff the suffix `remaining` can be segmented
       into a sequence of words from `word_dict`.
@@ -153,3 +154,42 @@ def word_break_dfs(s: str, word_dict: Sequence[str]) -> bool:
         return False
 
     return go(s)
+
+
+def word_break_dfs_memo(s: str, word_dict: Sequence[str]) -> bool:
+    """
+    Solve :func:`~p139.word_break_dp` by depth-first search with memoization
+    (top-down DP).
+
+    `go(i)` is True iff the suffix `s[i:]` can be segmented into a
+      sequence of words from `word_dict`.
+    Transition: `go(i) = True` when some word `w` satisfies
+      `s.startswith(w, i)` and `go(i + len(w))` is True.
+
+    Each start index `i` is solved at most once and cached, so overlapping
+    suffixes are not recomputed (contrast the exponential uncached search).
+
+    Complexity (let n = len(s), m = len(word_dict), L = max len(word_dict)):
+      Time:  O(n * m * L) - n start indices × m words × O(L) `startswith`.
+      Space: O(n)         - the memo table of n+1 booleans plus O(n)
+                            recursion depth. `str.startswith` compares
+                            in place, so no suffix slices are allocated.
+    """
+    assert all(word_dict)
+
+    @cache
+    def go(i: int) -> bool:
+        # Base case: the empty suffix (`i == n`) is already segmented
+        if i == len(s):
+            return True
+        # Try each dictionary word as the next piece starting at `i`
+        #
+        # Time O(m): one startswith (and possibly a recurse) per word
+        for w in word_dict:
+            # Time O(L): `startswith` compares in place from index `i`
+            # Space O(1): no suffix slice; recurse by advancing `i`
+            if s.startswith(w, i) and go(i + len(w)):
+                return True
+        return False
+
+    return go(0)
