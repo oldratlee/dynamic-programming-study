@@ -10,9 +10,18 @@
 
 ## Problems from Chapter 8 Dynamic Programming of "Introduction to the Design and Analysis of Algorithms" (3rd Edition)
 
-Problem solutions:
+- [`ch8_1_example1_coin_row.py`](src/dp_study/idaa3e/ch8_1_example1_coin_row.py) — Coin-row
+- [`ch8_1_example2_change_making.py`](src/dp_study/idaa3e/ch8_1_example2_change_making.py) — Change-making
+- [`ch8_1_example3_coin_collecting.py`](src/dp_study/idaa3e/ch8_1_example3_coin_collecting.py) — Coin-collecting
+- [`ch8_2_knapsack.py`](src/dp_study/idaa3e/ch8_2_knapsack.py) — Knapsack
 
-- [`ch8_1_example1_coin_row.py`](src/dp_study/idaa3e/ch8_1_example1_coin_row.py)
-- [`ch8_1_example2_change_making.py`](src/dp_study/idaa3e/ch8_1_example2_change_making.py)
-- [`ch8_1_example3_coin_collecting.py`](src/dp_study/idaa3e/ch8_1_example3_coin_collecting.py)
-- [`ch8_2_knapsack.py`](src/dp_study/idaa3e/ch8_2_knapsack.py)
+## Problems from "Introduction to Algorithms" (4th Edition)
+
+- [`rod_cutting.py`](src/clrs/rod_cutting.py) — Chapter 14 Rod Cutting
+
+## LeetCode
+
+- [`p3.py`](src/leetcode/p3.py) — [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters)
+- [`p23.py`](src/leetcode/p23.py) — [23. Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists)
+- [`p53.py`](src/leetcode/p53.py) — [53. Maximum Subarray](https://leetcode.com/problems/maximum-subarray)
+- [`p139.py`](src/leetcode/p139.py) — [139. Word Break](https://leetcode.com/problems/word-break)
