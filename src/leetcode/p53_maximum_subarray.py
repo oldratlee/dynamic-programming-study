@@ -34,7 +34,7 @@ from collections.abc import Sequence
 from itertools import islice
 
 
-def max_subarray_sum(nums: Sequence[int]) -> int:
+def max_subarray_sum_kadane(nums: Sequence[int]) -> int:
     """
     Largest sum of any contiguous subarray, with the *empty* subarray allowed.
     Uses Kadane's algorithm — a single-pass O(n) dynamic programming approach.
@@ -60,6 +60,37 @@ def max_subarray_sum(nums: Sequence[int]) -> int:
         # is negative (it would only drag the total down).
         cur_sum = max(cur_sum + num, num)
         max_sum = max(max_sum, cur_sum)
+    return max_sum
+
+
+def max_subarray_sum_accumulate(nums: Sequence[int]) -> int:
+    """
+    Largest sum of any contiguous subarray, with the *empty* subarray allowed.
+    Enumerates every subarray in O(n^2) by extending a running sum.
+
+    For each `start`, `cur_sum` is the sum of `nums[start:end + 1]`.
+    Extending `end` by one is O(1) (`cur_sum += nums[end]`), so all O(n^2)
+    subarrays are considered without re-summing from scratch (which would
+    be the O(n^3) brute-force approach).
+
+    `max_sum = 0` seeds the answer with the empty subarray's sum, so an
+    all-negative input returns 0 instead of the least-negative single element.
+
+    Time : O(n^2) — nested loops over start and end indices.
+    Space: O(1)   — only two scalar accumulators.
+    """
+    max_sum = 0
+    # Enumerate every non-empty subarray `nums[start:end + 1]`.
+    #   start: inclusive left index (0 .. len(nums) - 1).
+    #   end:   inclusive right index, running from `start` (single element)
+    #          up to `len(nums) - 1` (rest of the array).
+    for start in range(len(nums)):
+        # Reset the running sum for a new left endpoint.
+        # Each inner-loop step then grows the same subarray by one element.
+        cur_sum = 0
+        for end in range(start, len(nums)):
+            cur_sum += nums[end]
+            max_sum = max(max_sum, cur_sum)
     return max_sum
 
 
@@ -90,7 +121,7 @@ def max_subarray_sum_brute_force(nums: Sequence[int]) -> int:
     return max_sum
 
 
-def max_nonempty_subarray_sum(nums: Sequence[int]) -> int | None:
+def max_nonempty_subarray_sum_kadane(nums: Sequence[int]) -> int | None:
     """
     Largest sum of any non-empty subarray via Kadane's algorithm.
 
@@ -110,6 +141,41 @@ def max_nonempty_subarray_sum(nums: Sequence[int]) -> int | None:
     for num in islice(nums, 1, None):
         cur_sum = max(cur_sum + num, num)
         max_sum = max(max_sum, cur_sum)
+    return max_sum
+
+
+def max_nonempty_subarray_sum_accumulate(nums: Sequence[int]) -> int | None:
+    """
+    Largest sum of any non-empty subarray by enumerating every subarray
+    with a running sum.
+
+    For each `start`, `cur_sum` is the sum of `nums[start:end + 1]`.
+    Extending `end` by one is O(1) (`cur_sum += nums[end]`), so all O(n^2)
+    non-empty subarrays are considered without re-summing from scratch
+    (which would be the O(n^3) brute-force approach).
+
+    Returns `None` for an empty input. `max_sum = nums[0]` seeds the answer
+    with a real element, so an all-negative input returns the largest
+    (least-negative) single element rather than 0.
+
+    Time : O(n^2) — nested loops over start and end indices.
+    Space: O(1)   — only two scalar accumulators.
+    """
+    if not nums:
+        return None
+
+    max_sum = nums[0]
+    # Enumerate every non-empty subarray `nums[start:end + 1]`.
+    #   start: inclusive left index (0 .. len(nums) - 1).
+    #   end:   inclusive right index, running from `start` (single element)
+    #          up to `len(nums) - 1` (rest of the array).
+    for start in range(len(nums)):
+        # Reset the running sum for a new left endpoint.
+        # Each inner-loop step then grows the same subarray by one element.
+        cur_sum = 0
+        for end in range(start, len(nums)):
+            cur_sum += nums[end]
+            max_sum = max(max_sum, cur_sum)
     return max_sum
 
 
