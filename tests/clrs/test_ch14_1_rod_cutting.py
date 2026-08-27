@@ -2,8 +2,9 @@ from collections.abc import Callable
 
 import pytest
 
-from clrs.rod_cutting import (cut_rod_first_cut, cut_rod_first_cut_1indexed,
-                              cut_rod_split, cut_rod_split_seeded)
+from clrs.ch14_1_rod_cutting import (cut_rod_first_cut,
+                                     cut_rod_first_cut_1indexed, cut_rod_split,
+                                     cut_rod_split_seeded)
 
 
 @pytest.mark.parametrize("impl", [

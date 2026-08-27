@@ -10,18 +10,18 @@
 
 ## Problems from Chapter 8 Dynamic Programming of "Introduction to the Design and Analysis of Algorithms" (3rd Edition)
 
-- [`ch8_1_example1_coin_row.py`](src/dp_study/idaa3e/ch8_1_example1_coin_row.py) — Coin-row
-- [`ch8_1_example2_change_making.py`](src/dp_study/idaa3e/ch8_1_example2_change_making.py) — Change-making
-- [`ch8_1_example3_coin_collecting.py`](src/dp_study/idaa3e/ch8_1_example3_coin_collecting.py) — Coin-collecting
-- [`ch8_2_knapsack.py`](src/dp_study/idaa3e/ch8_2_knapsack.py) — Knapsack
+- [`ch8_1_example1_coin_row.py`](src/idaa3e/ch8_1_example1_coin_row.py) — Chapter 8.1 Example 1 Coin-row
+- [`ch8_1_example2_change_making.py`](src/idaa3e/ch8_1_example2_change_making.py) — Chapter 8.1 Example 2 Change-making
+- [`ch8_1_example3_coin_collecting.py`](src/idaa3e/ch8_1_example3_coin_collecting.py) — Chapter 8.1 Example 3 Coin-collecting
+- [`ch8_2_knapsack.py`](src/idaa3e/ch8_2_knapsack.py) — Chapter 8.2 Knapsack
 
 ## Problems from "Introduction to Algorithms" (4th Edition)
 
-- [`rod_cutting.py`](src/clrs/rod_cutting.py) — Chapter 14 Rod Cutting
+- [`ch14_1_rod_cutting.py`](src/clrs/ch14_1_rod_cutting.py) — Chapter 14.1 Rod Cutting
 
 ## LeetCode
 
-- [`p3.py`](src/leetcode/p3.py) — [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters)
-- [`p23.py`](src/leetcode/p23.py) — [23. Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists)
-- [`p53.py`](src/leetcode/p53.py) — [53. Maximum Subarray](https://leetcode.com/problems/maximum-subarray)
-- [`p139.py`](src/leetcode/p139.py) — [139. Word Break](https://leetcode.com/problems/word-break)
+- [`p3_longest_substring_without_repeating_characters.py`](src/leetcode/p3_longest_substring_without_repeating_characters.py) — [3. Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters)
+- [`p23_merge_k_sorted_lists.py`](src/leetcode/p23_merge_k_sorted_lists.py) — [23. Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists)
+- [`p53_maximum_subarray.py`](src/leetcode/p53_maximum_subarray.py) — [53. Maximum Subarray](https://leetcode.com/problems/maximum-subarray)
+- [`p139_word_break.py`](src/leetcode/p139_word_break.py) — [139. Word Break](https://leetcode.com/problems/word-break)

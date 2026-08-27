@@ -1,4 +1,5 @@
-from leetcode.p3 import longest_substring_without_repeating_characters
+from leetcode.p3_longest_substring_without_repeating_characters import \
+    longest_substring_without_repeating_characters
 
 
 def test_longest_substring_without_repeating_characters():

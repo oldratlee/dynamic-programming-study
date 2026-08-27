@@ -2,7 +2,7 @@ from collections.abc import Callable, Sequence
 
 import pytest
 
-from dp_study.idaa3e.ch8_2_knapsack import knapsack, knapsack_memo
+from idaa3e.ch8_2_knapsack import knapsack, knapsack_memo
 
 
 @pytest.mark.parametrize("impl", [

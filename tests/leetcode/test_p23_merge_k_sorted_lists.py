@@ -2,8 +2,10 @@ from collections.abc import Callable
 
 import pytest
 
-from leetcode.p23 import (LinkedList, ListNode, merge_k_sorted_linked_lists,
-                          merge_k_sorted_lists, merge_k_sorted_lists_2)
+from leetcode.p23_merge_k_sorted_lists import (LinkedList, ListNode,
+                                               merge_k_sorted_linked_lists,
+                                               merge_k_sorted_lists,
+                                               merge_k_sorted_lists_2)
 
 
 def test_merge_k_sorted_linked_lists():

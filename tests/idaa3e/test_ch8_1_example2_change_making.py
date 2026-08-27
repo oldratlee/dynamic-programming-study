@@ -2,8 +2,8 @@ from collections.abc import Callable, Sequence
 
 import pytest
 
-from dp_study.idaa3e.ch8_1_example2_change_making import (
-    make_change, make_change_support_d1_absent)
+from idaa3e.ch8_1_example2_change_making import (make_change,
+                                                 make_change_support_d1_absent)
 
 
 @pytest.mark.parametrize("impl", [
