@@ -3,8 +3,8 @@ from collections.abc import Callable, Sequence
 import pytest
 from pytest_benchmark.fixture import BenchmarkFixture
 
-from leetcode.p139 import (word_break_dfs, word_break_dfs_memo, word_break_dp,
-                           word_break_dp_startswith)
+from leetcode.p139_word_break import (word_break_dfs, word_break_dfs_memo,
+                                      word_break_dp, word_break_dp_startswith)
 
 
 @pytest.mark.parametrize("impl", [

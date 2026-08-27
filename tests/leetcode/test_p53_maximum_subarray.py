@@ -4,9 +4,9 @@ from collections.abc import Callable, Sequence
 import pytest
 from pytest_benchmark.fixture import BenchmarkFixture
 
-from leetcode.p53 import (max_nonempty_subarray_sum,
-                          max_nonempty_subarray_sum_brute_force,
-                          max_subarray_sum, max_subarray_sum_brute_force)
+from leetcode.p53_maximum_subarray import (
+    max_nonempty_subarray_sum, max_nonempty_subarray_sum_brute_force,
+    max_subarray_sum, max_subarray_sum_brute_force)
 
 
 @pytest.mark.parametrize("impl", [

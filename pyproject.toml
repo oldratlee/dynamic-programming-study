@@ -10,7 +10,11 @@ requires-python = ">=3.12"
 dependencies = []
 
 [tool.poetry]
-packages = [{ include = "dp_study", from = "src" }]
+packages = [
+  { include = "clrs", from = "src" },
+  { include = "idaa3e", from = "src" },
+  { include = "leetcode", from = "src" },
+]
 
 [tool.poetry.group.test.dependencies]
 pytest = "^9.1.1"
