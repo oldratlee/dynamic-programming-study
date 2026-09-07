@@ -95,6 +95,10 @@ Benchmark inputs stay small enough that brute-force variants can still run.
   src/leetcode/p3_longest_substring_without_repeating_characters.py)
   — [3. Longest Substring Without Repeating Characters](
   https://leetcode.com/problems/longest-substring-without-repeating-characters)
+- [`p5_longest_palindromic_substring.py`](
+  src/leetcode/p5_longest_palindromic_substring.py)
+  — [5. Longest Palindromic Substring](
+  https://leetcode.com/problems/longest-palindromic-substring)
 - [`p23_merge_k_sorted_lists.py`](src/leetcode/p23_merge_k_sorted_lists.py)
   — [23. Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists)
 - [`p53_maximum_subarray.py`](src/leetcode/p53_maximum_subarray.py)

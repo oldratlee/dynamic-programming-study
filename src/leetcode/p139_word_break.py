@@ -76,9 +76,9 @@ def word_break_dp(s: str, word_dict: Sequence[str]) -> bool:
 def word_break_dp_startswith(
         s: str, word_dict: Sequence[str]) -> bool:
     """
-    Solve :func:`~p139.word_break_dp` with an optimized substring comparison.
+    Solve :func:`word_break_dp` with an optimized substring comparison.
 
-    Identical in logic to :func:`~p139.word_break_dp`,
+    Identical in logic to :func:`word_break_dp`,
     except that the substring equality test `s[remain:i] == w`
     is replaced by `s.startswith(w, remain, i)`:
 
@@ -119,7 +119,7 @@ def word_break_dp_startswith(
 
 def word_break_dfs(s: str, word_dict: Sequence[str]) -> bool:
     """
-    Solve :func:`~p139.word_break_dp` by depth-first search (no memoization).
+    Solve :func:`word_break_dp` by depth-first search (no memoization).
 
     `go(remaining)` is True iff the suffix `remaining` can be segmented
       into a sequence of words from `word_dict`.
@@ -158,8 +158,8 @@ def word_break_dfs(s: str, word_dict: Sequence[str]) -> bool:
 
 def word_break_dfs_memo(s: str, word_dict: Sequence[str]) -> bool:
     """
-    Solve :func:`~p139.word_break_dp` by depth-first search with memoization
-    (top-down DP).
+    Solve :func:`word_break_dp` by depth-first search
+      with memoization (top-down DP).
 
     `go(i)` is True iff the suffix `s[i:]` can be segmented into a
       sequence of words from `word_dict`.
@@ -167,7 +167,7 @@ def word_break_dfs_memo(s: str, word_dict: Sequence[str]) -> bool:
       `s.startswith(w, i)` and `go(i + len(w))` is True.
 
     Each start index `i` is solved at most once and cached, so overlapping
-    suffixes are not recomputed (contrast the exponential uncached search).
+      suffixes are not recomputed (contrast the exponential uncached search).
 
     Complexity (let n = len(s), m = len(word_dict), L = max len(word_dict)):
       Time:  O(n * m * L) - n start indices × m words × O(L) `startswith`.
