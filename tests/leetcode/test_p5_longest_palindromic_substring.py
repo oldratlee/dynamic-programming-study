@@ -15,8 +15,13 @@ from leetcode.p5_longest_palindromic_substring import (
 @pytest.mark.parametrize("s, length", [
     ('', 0),
     ('a', 1),
-    ('babad', 3),
+    # the answer is exactly the final two characters s[n - 2:n] - the
+    # last start index of a length-2 substring - so these catch an
+    # outer-loop bound that stops one index too early
+    ('aa', 2),
+    ('abcc', 2),
     ('cbbd', 2),
+    ('babad', 3),
     # palindromes of length >= 4: their inner substring is itself a
     # recursive-case cell, so they catch a wrong dp evaluation order
     ('abba', 4),
