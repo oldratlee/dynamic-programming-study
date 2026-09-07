@@ -6,11 +6,13 @@ from pytest_benchmark.fixture import BenchmarkFixture
 
 from leetcode.p5_longest_palindromic_substring import (
     longest_palindromic_substring_brute_force,
-    longest_palindromic_substring_dp)
+    longest_palindromic_substring_dp,
+    longest_palindromic_substring_expand_around_center)
 
 
 @pytest.mark.parametrize("impl", [
     longest_palindromic_substring_dp,
+    longest_palindromic_substring_expand_around_center,
     longest_palindromic_substring_brute_force])
 @pytest.mark.parametrize("s, length", [
     ('', 0),
@@ -39,10 +41,11 @@ def test_longest_palindromic_substring(
 
 @pytest.mark.parametrize("impl", [
     longest_palindromic_substring_dp,
+    longest_palindromic_substring_expand_around_center,
     longest_palindromic_substring_brute_force])
 # n=100 and n=200 keep the brute-force O(n^3) runs within the
-# benchmark's time budget while still exposing the speed gap between
-# the dp O(n^2) and the brute force O(n^3).
+# benchmark's time budget while still exposing the speed gap
+# between the O(n^2) implementations and the brute force O(n^3).
 @pytest.mark.parametrize("n", [100, 200])
 @pytest.mark.benchmark
 def test_benchmark_longest_palindromic_substring(
