@@ -16,6 +16,15 @@ Output: "bb"
 Constraints:
 * 1 <= s.length <= 1000
 * s consist of only digits and English letters.
+
+Implementation Note:
+* the implementations deliberately also accept the empty string -
+  outside the constraint above - and return '' for it; the tests cover it.
+* When several substrings tie for the longest, any one of them may be returned:
+  the implementations in this module may pick different winners on ties
+  (for "babad" this DP returns "aba" while expand-around-center returns "bab"),
+  so tests assert the length and palindromicity of the result,
+  not its exact value.
 """
 
 
@@ -39,8 +48,9 @@ def longest_palindromic_substring_dp(s: str) -> str:
                       O(n) each), which stays within O(n^2).
       Space: O(n^2) - the `dp` table of n rows x (n + 1) booleans.
     """
-    if not s:
-        return ''
+    # `max_len`/`candidate` track the longest palindrome seen so far.
+    # Seed with the empty string (length 0).
+    max_len, candidate = 0, ''
 
     n = len(s)
     # dp[start][stop] == True iff s[start:stop] is a palindrome.
@@ -48,18 +58,19 @@ def longest_palindromic_substring_dp(s: str) -> str:
     #
     # Time O(n^2): allocate the table; Space O(n^2): the table itself
     dp = [[False] * (n + 1) for _ in range(n)]
-
-    # `max_len`/`candidate` track the longest palindrome seen so far.
-    # Length 1 substrings are always palindromic, so seed with s[0].
-    max_len, candidate = 1, s[0]
-
-    # Base cases: the empty substring s[i:i] and every single letter
+    # Base cases: the empty substring s[i:i] and every single character
     # s[i:i + 1] are palindromic.
     for i in range(n):
-        dp[i][i] = True
-        dp[i][i + 1] = True
+        dp[i][i] = dp[i][i + 1] = True
+        # Promote the seed to a single character:
+        #   every single character is a palindrome.
+        # the recursive-case loop below only tracks length >= 2,
+        # so without this an input like "ab" (whose longest palindrome
+        # is a single character) would wrongly return ''.
+        if 1 > max_len:
+            max_len, candidate = 1, s[i]
     # Recursive case: substrings of length >= 2; the empty and
-    # single-letter substrings are the base cases handled above.
+    # single-character substrings are the base cases handled above.
     #
     # `start` iterates from n - 2 down to 0.
     #   - `reversed(range(n - 1))`.
@@ -76,9 +87,8 @@ def longest_palindromic_substring_dp(s: str) -> str:
             # inner substring s[start + 1:stop - 1] is palindromic.
             if s[start] == s[stop - 1] and dp[start + 1][stop - 1]:
                 dp[start][stop] = True
-                # Time O(n): copy the slice, but only when it strictly
-                # improves `max_len` (at most n times in total)
                 if (length := stop - start) > max_len:
+                    # Time O(n): copy the slice
                     max_len, candidate = length, s[start:stop]
 
     return candidate
@@ -138,31 +148,28 @@ def longest_palindromic_substring_expand_around_center(s: str) -> str:
     """
     n = len(s)
     # Longest palindrome found so far, kept as its start index and length.
-    # Seeding at 0/0; for s == '' the loop never runs, so s[0:0] returns ''.
+    # Seed with the empty string (length 0).
+    # for s == '' the loop never runs, so s[0:0] returns ''.
     best_start, max_len = 0, 0
 
     for center in range(n):
         # An odd-length palindrome is centered on the character `center`,
         # an even-length one on the gap just before character `center`
-        # (between `center - 1` and `center`). Both seeds are half-open
-        # spans: the odd seed s[center:center + 1] is the character itself
-        # (length 1), the even seed s[center:center] the empty span on
-        # that gap (length 0). The first even seed s[0:0] sits on the
-        # nonexistent gap before the first character; `start > 0` fails
-        # at once, so it harmlessly yields length 0.
+        # (between `center - 1` and `center`).
+        # Both seeds are half-open spans: the odd seed s[center:center + 1] is
+        # the character itself (length 1), the even seed s[center:center]
+        # the empty span on that gap (length 0).
+        # For center == 0 that "gap" is the string boundary, so the even seed
+        # never expands - a harmless no-op that keeps the loop uniform.
         for start, stop in ((center, center), (center, center + 1)):
             # Invariant: s[start:stop] is a palindrome. Each step compares
             # the characters just outside the span, s[start - 1] and
             # s[stop], and absorbs them when they match, so the span only
             # ever holds valid palindromes. Time O(1) per step; at most
-            # n / 2 steps per center.
+            # n / 2 steps per seed.
             while start > 0 and stop < n and s[start - 1] == s[stop]:
                 start -= 1
                 stop += 1
-            # A failed extension is never absorbed, so at loop exit
-            # s[start:stop] is already the maximal palindrome at this
-            # center: its length is simply stop - start, with no
-            # inclusive-span fixup (s[lo + 1:hi], hi - lo - 1).
             if (length := stop - start) > max_len:
                 best_start, max_len = start, length
 
@@ -176,9 +183,8 @@ def longest_palindromic_substring_brute_force(s: str) -> str:
     enumerate every substring and keep the longest one that reads the
     same forwards and backwards.
 
-    Enumerates every substring `s[start:stop]` of length >= 2 (length-1
-    substrings are already covered by the initial `candidate = s[0]`)
-    and tests each candidate against its own reversal.
+    Enumerates every substring `s[start:stop]` of length >= 1 and tests
+    each candidate against its own reversal.
 
     Complexity (let n = len(s)):
       Time:  O(n^3) - O(n^2) substrings, each sliced, reversed and
@@ -188,22 +194,15 @@ def longest_palindromic_substring_brute_force(s: str) -> str:
       Space: O(n)   - the temporary slice `sub` and its reversal
                       `sub[::-1]` each hold up to n characters.
     """
-    if not s:
-        return ''
-
-    # single letter substrings are always palindromic, so seed with s[0].
-    max_len, candidate = 1, s[0]
-    # Enumerate every substring s[start:stop] of length >= 2; anything
-    # shorter is trivially palindromic and cannot improve on the seed.
-    #   start: inclusive left index, 0 .. len(s) - 2 (`range(len(s) - 1)`);
-    #          len(s) - 2 is the last start of a length-2 substring, so
-    #          the final two characters are enumerated as well.
-    #   stop:  exclusive right index, running from `start + 2` (length 2)
+    # Seed with the empty string (length 0).
+    max_len, candidate = 0, ''
+    # Enumerate every substring s[start:stop] of length >= 1.
+    #   start: inclusive left index, running from 0 up to `len(s) - 1`
+    #          (the last character).
+    #   stop:  exclusive right index, running from `start + 1` (length 1)
     #          up to `len(s)` (the whole suffix).
-    for start in range(len(s) - 1):
-        for stop in range(start + 2, len(s) + 1):
-            # Prune: only substrings strictly longer than
-            # the current best can become the new answer.
+    for start in range(len(s)):
+        for stop in range(start + 1, len(s) + 1):
             if (length := stop - start) <= max_len:
                 continue
             # Time O(length): slice + reversal + comparison;
